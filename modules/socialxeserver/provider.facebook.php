@@ -1,7 +1,7 @@
 <?php
 
 // 페이스북 라이브러리 로드
-require_once(_XE_PATH_.'modules/socialxeserver/facebook/facebook.php');
+require_once(_XE_PATH_.'modules/socialxeserver/facebook/facebook_socialxe.php');
 
 // 페이스북을 위한 클래스
 class socialxeServerProviderFacebook extends socialxeServerProvider{
@@ -15,7 +15,7 @@ class socialxeServerProviderFacebook extends socialxeServerProvider{
 
 	// 생성자
 	function socialxeServerProviderFacebook(&$sessionManager, $app_id, $app_secret){
-		parent::socialxeServerProvider('twitter', $sessionManager);
+		parent::socialxeServerProvider('facebook', $sessionManager);
 		$this->app_id = $app_id;
 		$this->app_secret = $app_secret;
 		$this->callback = $this->getNotEncodedFullUrl('', 'module', 'socialxeserver', 'act', 'procSocialxeserverCallback', 'provider', 'facebook');
@@ -24,7 +24,7 @@ class socialxeServerProviderFacebook extends socialxeServerProvider{
 	// 로그인 url을 얻는다.
 	function getLoginUrl(){
 		// 페이스북 객체 생성
-		$fb = new Facebook(array(
+		$fb = new FacebookSocialXE(array(
 			"appId" => $this->app_id,
 			"secret" => $this->app_secret,
 			"cookie" => false
@@ -39,10 +39,9 @@ class socialxeServerProviderFacebook extends socialxeServerProvider{
 		// URL 생성
 		try{
 			$loginUrl = $fb->getLoginUrl(array(
-				"req_perms" => "publish_stream,offline_access,email",
+				"scope" => "publish_stream,offline_access,email",
 				"display" => $display,
-				"next" => $this->callback,
-				"cancel_url" => $this->callback
+				"redirect_uri" => $this->callback
 			));
 		}catch(FacebookApiException $e){
 			return new Object(-1, $e->__toString());
@@ -57,14 +56,14 @@ class socialxeServerProviderFacebook extends socialxeServerProvider{
 	// 콜백 처리
 	function callback(){
 		// 페이스북 객체 생성
-		$fb = new Facebook(array(
+		$fb = new FacebookSocialXE(array(
 			"appId" => $this->app_id,
 			"secret" => $this->app_secret,
 			"cookie" => false
 		));
 
 		try{
-			$session = $fb->getSession();
+			$session = $fb->getSession($this->callback);
 		}catch(FacebookApiException $e){
 			return new Object(-1, $e->__toString());
 		}
@@ -76,7 +75,7 @@ class socialxeServerProviderFacebook extends socialxeServerProvider{
 		}
 
 		// 사용자 정보도 받아서 저장해 놓는다.
-		$account = $fb->api($fb->getUser());
+		$account = $fb->api('me');
 
 		// 액세스 토큰과 사용자 정보를 묶는다.
 		$info['access'] = $session;
@@ -98,7 +97,7 @@ class socialxeServerProviderFacebook extends socialxeServerProvider{
 		if (!$lang->notify) $lang->notify = $this->lang->notify['en'];
 
 		// 페이스북 객체 생성
-		$fb = new Facebook(array(
+		$fb = new FacebookSocialXE(array(
 			"appId" => $this->app_id,
 			"secret" => $this->app_secret,
 			"cookie" => false

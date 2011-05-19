@@ -66,7 +66,7 @@
 			$pattern = "/<!--BeforeComment\((.*),.*\)-->/U";
 			$output = preg_replace_callback($pattern, create_function('$matches',
 							'$social_info = $GLOBALS["social_info"][$matches[1]];' .
-							'if (!$social_info->provider || $social_info->provider == "xe") return $mathces[0];' .
+							'if (!$social_info->provider || $social_info->provider == "xe") return $matches[0];' .
 							'$oSocialxeModel = &getModel("socialxe");' .
 							'$link = $oSocialxeModel->getAuthorLink($social_info->provider, $social_info->id, $social_info->social_nick_name);' .
 							'$lang_provider = Context::getLang("provider");' .
@@ -77,7 +77,7 @@
 			$pattern = "/<!--BeforeDocument\((.*),.*\)-->/U";
 			$output = preg_replace_callback($pattern, create_function('$matches',
 							'$social_info = $GLOBALS["social_info"][$matches[1]];' .
-							'if (!$social_info->provider || $social_info->provider == "xe") return $mathces[0];' .
+							'if (!$social_info->provider || $social_info->provider == "xe") return $matches[0];' .
 							'$oSocialxeModel = &getModel("socialxe");' .
 							'$link = $oSocialxeModel->getAuthorLink($social_info->provider, $social_info->id, $social_info->social_nick_name);' .
 							'$lang_provider = Context::getLang("provider");' .

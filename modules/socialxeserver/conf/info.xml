@@ -9,9 +9,9 @@
 	<description xml:lang="jp">SocialXEサーバ (translated by SeklutZ)</description>
 	<description xml:lang="en">SocialXE Server (transltated by misol)</description>
 	<description xml:lang="zh-TW">SocialXE 主機 (translated by royallin)</description>
-	<description xml:lang="zh-CN">SocialXE服务器 (translated by 창한이)</description>
-	<version>1.0.9</version>
-	<date>2011-04-07</date>
+	<description xml:lang="zh-CN">SocialXE服务器 (translated by 창한이(Nick) / admin@nickspace.cn / http://blog.nickspace.cn)</description>
+	<version>1.0.10</version>
+	<date>2011-05-19</date>
 	<category>accessory</category>
 	<license link="http://www.opensource.org/licenses/mit-license.php">MIT</license>
 
