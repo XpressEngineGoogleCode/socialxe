@@ -7,7 +7,7 @@
 						<!--@if ($provider != 'xe')-->
 							<a href="{getUrl('', 'mid', $mid, 'module', 'socialxe', 'act', 'dispSocialxeLogout', 'provider', $provider, 'query', $query)}" onclick="providerLogout('{$provider}', '{$skin}'); return false;">
 						<!--@else-->
-							<a href="{getUrl('', 'vid', $vid, 'mid', $mid, 'document_srl', $document_srl, 'act', 'dispMemberLogout')}">
+							<a href="{getUrl('', 'vid', $vid, 'mid', $mid, 'document_srl', $_document_srl, 'act', 'dispMemberLogout')}">
 						<!--@end-->
 						<img width="24" height="24" src="./images/{$provider}_on.png" title="{$lang->provider[$provider]}({$nick_names[$provider]}) Logout" alt="{$lang->provider[$provider]}({$nick_names[$provider]}) Logout" class="iePngFix"/>
 						</a>
@@ -15,7 +15,7 @@
 						<!--@if ($provider != 'xe')-->
 							<a href="{getUrl('', 'mid', $mid, 'module', 'socialxe', 'act', 'dispSocialxeLogin', 'provider', $provider, 'query', $query)}" onclick="providerLogin(this.href, '{$skin}'); return false;">
 						<!--@else-->
-							<a href="{getUrl('', 'vid', $vid, 'mid', $mid, 'document_srl', $document_srl, 'act', 'dispMemberLoginForm')}">
+							<a href="{getUrl('', 'vid', $vid, 'mid', $mid, 'document_srl', $_document_srl, 'act', 'dispMemberLoginForm')}">
 						<!--@end-->
 						<img width="24" height="24" src="./images/{$provider}_off.png" title="{$lang->provider[$provider]} Login" alt="{$lang->provider[$provider]} Login" class="iePngFix"/>
 						</a>
