@@ -132,12 +132,12 @@
 			$oDocument = $oDocumentModel->getDocument($args->document_srl);
 			Context::set('allow_comment', $oDocument->allowComment());
 
-			// mid와 document_srl이 속한 모듈을 체크해서 다르다면 document_srl을 없앤다.
+			// mid와 document_srl이 속한 모듈을 체크해서 같을 때만 _document_srl을 세팅
 			$oModuleModel = &getModel('module');
 			$module_info_by_mid = $oModuleModel->getModuleInfoByMid(Context::get('mid'));
 			$module_info_by_document_srl = $oModuleModel->getModuleInfoByDocumentSrl($args->document_srl);
-			if ($module_info_by_mid->module_srl != $module_info_by_document_srl->module_srl){
-				Context::set('document_srl', null);
+			if ($module_info_by_mid->module_srl == $module_info_by_document_srl->module_srl){
+				Context::set('_document_srl', $args->document_srl);
 			}
 
 			// 사용하는 필터 등록
