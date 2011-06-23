@@ -703,7 +703,7 @@
 		function triggerBeforeUpdateDocument(&$obj){
 			// 게시물 관리 때는 실행하지 않는다.
 			if (Context::get('act') == 'procDocumentManageCheckedDocument') return new Object();
-			
+
 			// widget, textyle 모듈은 실행하지 않는다.
 			$module_info = Context::get('module_info');
 			if (!$module_info->module){
@@ -717,6 +717,7 @@
 			$oDocument = $oDocumentModel->getDocument($obj->document_srl);
 
 			// 글의 module_srl과 obj의 module_srl이 다르다면 임시저장된 글을 등록한다고 판단할 수 있다.
+			// 즉, 글의 module_srl과 obj의 module_srl이 같으면 글 수정이므로 더 이상 진행하지 않는다.
 			if ($oDocument->get('module_srl') == $obj->module_srl) return new Object();
 
 			// 글 업데이트 후 트리거에서 실행하도록 글로벌 변수를 하나 설정한다.
@@ -729,6 +730,11 @@
 		function triggerAfterUpdateDocument(&$obj){
 			// 플래그 설정되었는지 확인
 			if (!$GLOBALS['socialxe_update_document_flag']) return new Object();
+
+			// 현재 모듈이 소셜 통합 기능 사용 중인지 확인한다.
+			$oSocialxeModel = &getModel('socialxe');
+			$config = $oSocialxeModel->getModulePartConfig($obj->module_srl);
+			if ($config->use_social_info != Y) return new Object();
 
 			// 비밀글인지 확인
 			if ($obj->is_secret == 'Y') return new Object();

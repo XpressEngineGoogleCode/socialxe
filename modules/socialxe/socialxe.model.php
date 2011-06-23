@@ -337,8 +337,12 @@
 			// 전역 설정에 있으면 그걸 리턴
 			if ($GLOBALS['socialxe_part_config'][$module_srl]) return $GLOBALS['socialxe_part_config'][$module_srl];
 
-			// config를 가져옴
+			// 존재하는 모듈인지 확인
 			$oModuleModel = &getModel('module');
+			$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+			if (!$module_info) return;
+
+			// config를 가져옴
 			$module_config = $oModuleModel->getModulePartConfig('socialxe', $module_srl);
 
 			if (!$module_config){

@@ -17,6 +17,9 @@ function providerLogin(url, skin){
 function completeSocialxeLogin(skin){
 	var params = new Array();
 	params['skin'] = skin;
+	params['_vid'] = current_url.getQuery('vid');
+	params['_mid'] = current_url.getQuery('mid');
+	params['_document_srl'] = current_url.getQuery('document_srl');
 	var response_tags = new Array('error','message','output');
 	exec_xml('socialxe', 'procCompileInput', params, replaceInput, response_tags);
 }
@@ -292,17 +295,19 @@ function autoViewSubComment(){
 
 // textarea 크기 적용
 function runAutoSize(){
-	var obj = jQuery(".socialxe_resizable");
+	jQuery(document).ready(function(){
+		var obj = jQuery(".socialxe_resizable");
 
-	obj.each(function(){
-		var this_obj = jQuery(this);
-		if (!this_obj.attr("resizable") && !this_obj.attr("dummy")){
-			this_obj.autoResize({
-				animateDuration : 200,
-				limit : 250
-			});
-			this_obj.attr("resizable", true);
-		}
+		obj.each(function(){
+			var this_obj = jQuery(this);
+			if (!this_obj.attr("resizable") && !this_obj.attr("dummy")){
+				this_obj.autoResize({
+					animateDuration : 200,
+					limit : 250
+				});
+				this_obj.attr("resizable", true);
+			}
+		});
 	});
 }
 

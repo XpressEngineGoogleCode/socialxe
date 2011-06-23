@@ -5,20 +5,20 @@
 				<li>
 					<!--@if ($provider_is_logged[$provider])-->
 						<!--@if ($provider != 'xe')-->
-							<a href="{getUrl('', 'module', 'socialxe', 'act', 'dispSocialxeLogout', 'provider', $provider, 'query', $query)}" onclick="providerLogout('{$provider}', '{$skin}'); return false;">
+							<a href="{getUrl('', 'mid', $mid, 'module', 'socialxe', 'act', 'dispSocialxeLogout', 'provider', $provider, 'query', $query)}" onclick="providerLogout('{$provider}', '{$skin}'); return false;">
+						<!--@else-->
+							<a href="{getUrl('', 'vid', $vid, 'mid', $mid, 'document_srl', $document_srl, 'act', 'dispMemberLogout')}">
 						<!--@end-->
-						<img width="24" height="24" src="./images/{$provider}_on.png" title="{$lang->provider[$provider]}({$nick_names[$provider]})<!--@if ($provider != 'xe')--> Logout<!--@end-->" alt="{$lang->provider[$provider]}({$nick_names[$provider]})<!--@if ($provider != 'xe')--> Logout<!--@end-->" class="iePngFix"/>
-						<!--@if ($provider != 'xe')-->
-							</a>
-						<!--@end-->
+						<img width="24" height="24" src="./images/{$provider}_on.png" title="{$lang->provider[$provider]}({$nick_names[$provider]}) Logout" alt="{$lang->provider[$provider]}({$nick_names[$provider]}) Logout" class="iePngFix"/>
+						</a>
 					<!--@else-->
 						<!--@if ($provider != 'xe')-->
-							<a href="{getUrl('', 'module', 'socialxe', 'act', 'dispSocialxeLogin', 'provider', $provider, 'query', $query)}" onclick="providerLogin(this.href, '{$skin}'); return false;">
+							<a href="{getUrl('', 'mid', $mid, 'module', 'socialxe', 'act', 'dispSocialxeLogin', 'provider', $provider, 'query', $query)}" onclick="providerLogin(this.href, '{$skin}'); return false;">
+						<!--@else-->
+							<a href="{getUrl('', 'vid', $vid, 'mid', $mid, 'document_srl', $document_srl, 'act', 'dispMemberLoginForm')}">
 						<!--@end-->
-						<img width="24" height="24" src="./images/{$provider}_off.png" title="{$lang->provider[$provider]}<!--@if ($provider != 'xe')--> Login<!--@end-->" alt="{$lang->provider[$provider]}<!--@if ($provider != 'xe')--> Login<!--@end-->" class="iePngFix"/>
-						<!--@if ($provider != 'xe')-->
-							</a>
-						<!--@end-->
+						<img width="24" height="24" src="./images/{$provider}_off.png" title="{$lang->provider[$provider]} Login" alt="{$lang->provider[$provider]} Login" class="iePngFix"/>
+						</a>
 					<!--@end-->
 				</li>
 				<!--@end-->

@@ -132,6 +132,14 @@
 			$oDocument = $oDocumentModel->getDocument($args->document_srl);
 			Context::set('allow_comment', $oDocument->allowComment());
 
+			// mid와 document_srl이 속한 모듈을 체크해서 다르다면 document_srl을 없앤다.
+			$oModuleModel = &getModel('module');
+			$module_info_by_mid = $oModuleModel->getModuleInfoByMid(Context::get('mid'));
+			$module_info_by_document_srl = $oModuleModel->getModuleInfoByDocumentSrl($args->document_srl);
+			if ($module_info_by_mid->module_srl != $module_info_by_document_srl->module_srl){
+				Context::set('document_srl', null);
+			}
+
 			// 사용하는 필터 등록
 			Context::addJsFilter($this->widget_path.'filter', 'insert_social_comment.xml');
 			Context::addJsFilter($this->widget_path.'filter', 'delete_social_comment.xml');
@@ -208,6 +216,15 @@
 			$enter_send = $args->enter_send;
 			if (!$enter_send) $enter_send = 'Y';
 			Context::set('enter_send', $enter_send);
+
+			// vid, mid, document_srl을 복원
+			$vid = Context::get('_vid');
+			$mid = Context::get('_mid');
+			$document_srl = Context::get('_document_srl');
+
+			if ($vid) Context::set('vid', $vid);
+			if ($mid) Context::set('mid', $mid);
+			if ($document_srl) Context::set('document_srl', $document_srl);
 
 			// 템플릿의 스킨 경로를 지정 (skin, colorset에 따른 값을 설정)
 			$tpl_path = sprintf('%sskins/%s', $this->widget_path, $skin);
