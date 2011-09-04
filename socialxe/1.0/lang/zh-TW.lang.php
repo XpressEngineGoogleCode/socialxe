@@ -45,7 +45,7 @@
 	$lang->bitly_info = 'bit.ly 資訊頁面';
 
 	$lang->msg_login = '必須先登入您所選擇的服務。<br/>請稍後。';
-	$lang->msg_redirect = 'If your browser doesn\'t work for a long time, click here.';
+	$lang->msg_redirect = '如果您的瀏覽器長時間沒有響應，請按此。';
 	$lang->msg_request_error = 'SocialXE 主機 API請求失敗。';
 	$lang->msg_invalid_provider = '不正確的服務提供者。';
 	$lang->msg_invalid_request_client = '客戶端未通過驗證。';

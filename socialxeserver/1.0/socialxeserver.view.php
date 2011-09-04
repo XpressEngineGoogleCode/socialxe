@@ -71,8 +71,8 @@
 			// 정보 가공
 			$client_info = $output->data;
 			$domain_array = explode(',', $client_info->domain);
-			foreach($domain_array as &$val){
-				$val = trim($val);
+			foreach($domain_array as $name => $val){
+				$domain_array[$name] = trim($val);
 			}
 
 			// 템플릿에 사용하기 위해 셋
