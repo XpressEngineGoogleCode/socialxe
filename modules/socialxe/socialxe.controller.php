@@ -348,6 +348,13 @@
 			$member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
 			if (!$member_info) return new Object(-1, 'something wrong');
 
+			// 1.5.0 이상에서 사용자 확인 변수 확인
+			if(defined("__XE__")) {
+				$config = $oMemberModel->getMemberConfig();
+				if ($config->identifier == 'email_address') {
+					$member_info->user_id = $member_info->email_address;
+				}
+			}
 			// 로그인은 기본적으로 자동 로그인으로...
 			$oMemberController = &getController('member');
 			//TODO XE 자동 로그인 버그 때문에 일단 자동 로그인은 해제
@@ -412,11 +419,13 @@
 			}
 			if (!$nick_name_ok) return $this->stop('msg_exists_nick_name');
 
-			// 준비
-			$args->user_id = '_sx.' . $provider . '.' . $id;
+			// 준비 1.5.0 이상에서는 아이디를 지정하지 않음
+			if(!defined("__XE__")) $args->user_id = '_sx.' . $provider . '.' . $id;
 			$args->nick_name = $args->user_name = $nick_name;
 			$args->email_address = $email_address;
-			$args->password = md5(getmicrotime());
+			$text_array = array('\~','\!','\@','\#','\$','\%','\^','\&','\*','\(','\)','\_','\+','\=','\-','\`','\,','\.','\/','\<','\>','\?','\;','\'','\:','\"','\[','\]','\{','\}','\\','\|');
+
+			$args->password = $text_array[rand(0,31)].md5(time()).$text_array[rand(0,31)].md5(getmicrotime());
 			$args->allow_mailing = $allow_mailing;
 			if ($args->allow_mailing != 'Y') $args->allow_mailing = 'N';
 
@@ -425,6 +434,14 @@
 			$output = $oMemberController->insertMember($args);
 			if(!$output->toBool()) return $this->stop($output->getMessage());
 			$member_srl = $output->get('member_srl');
+
+			// 1.5.0 이상에서 아이디 추가 - 꼼수인가;
+			if(defined("__XE__")) {
+				$args->member_srl = $member_srl;
+				$args->user_id = '_sx.' . $provider . '.' . $id;
+				$output2 = executeQuery('socialxe.updateMemberId', $args);
+				if(!$output2->toBool()) return $output2;
+			}
 
 			// 소셜 정보 추가
 			$session->access = $this->providerManager->getAccess($provider);
@@ -448,6 +465,13 @@
 				return $output;
 			}
 
+			// 1.5.0 이상에서 사용자 확인 변수 확인
+			if(defined("__XE__")) {
+				$config = $oMemberModel->getMemberConfig();
+				if ($config->identifier == 'email_address') {
+					$args->user_id = $args->email_address;
+				}
+			}
 			// 로그인은 기본적으로 자동 로그인으로...
 			//TODO XE 자동 로그인 버그 때문에 일단 자동 로그인은 해제
 			// http://xe.xpressengine.net/19469260
