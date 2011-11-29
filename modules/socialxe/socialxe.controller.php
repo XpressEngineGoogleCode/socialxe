@@ -440,7 +440,10 @@
 				$args->member_srl = $member_srl;
 				$args->user_id = '_sx.' . $provider . '.' . $id;
 				$output2 = executeQuery('socialxe.updateMemberId', $args);
-				if(!$output2->toBool()) return $output2;
+				if(!$output2->toBool()) {
+					$oMemberController->deleteMember($member_srl);
+					return $output2;
+				}
 			}
 
 			// 소셜 정보 추가
