@@ -325,6 +325,15 @@
 			if(!is_dir($tpl_path)) $tpl_path = sprintf('%sskins/%s', $this->module_path, 'default');
 			$this->setTemplatePath($tpl_path);
 
+			// JS 불러오기
+			 if(!defined("__XE__")) {
+				Context::addJsFile("./common/js/jquery.js", true, '', -100000);
+				Context::addJsFile("./common/js/js_app.js", true, '', -100000);
+				Context::addJsFile("./common/js/common.js", true, '', -100000);
+				Context::addJsFile("./common/js/xml_handler.js", true, '', -100000);
+				Context::addJsFile("./common/js/xml_js_filter.js", true, '', -100000);
+			}
+
 			// 템플릿 파일 지정
 			$this->setTemplateFile('social_login_additional');
 		}
