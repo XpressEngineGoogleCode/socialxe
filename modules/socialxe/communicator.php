@@ -363,7 +363,12 @@ class socialxeCommunicator{
 	function httpRequest($url, $mode = 'GET'){
 		if ($mode == 'POST'){
 			$url_info = parse_url($url);
-			$url = $url_info['scheme'] . '://' . $url_info['host'] . $url_info['path'];
+			$url = $url_info['scheme'] . '://' . $url_info['host'];
+			if (!$url_info['port'] || $url_info['port'] == '80'){
+				$url .= $url_info['path'];
+			}else{
+				$url .= ':'. $url_info['port'] . $url_info['path'];
+			}
 			$body = $url_info['query'];
 		}
 
