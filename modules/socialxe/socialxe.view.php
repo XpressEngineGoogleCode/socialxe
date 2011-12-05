@@ -49,6 +49,15 @@
 				Context::set('url', $url);
 
 				// 로그인 안내 페이지 표시
+				// 모바일 모드가 아닐때도 모바일 페이지가 정상적으로 표시되도록.
+				if(class_exists('Mobile')) {
+					if(!Mobile::isFromMobilePhone()) {
+						Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes, target-densitydpi=medium-dpi" />');
+					}
+				}
+				if(!defined('__XE__')) {
+					Context::addJsFile("./common/js/jquery.js", true, '', -100000);
+				}
 				$this->setTemplatePath($template_path);
 				$this->setTemplateFile('login');
 				return;

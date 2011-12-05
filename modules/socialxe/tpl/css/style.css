@@ -7,7 +7,7 @@
 @media handheld, only screen and (max-device-width: 600px) {
 	.wide {width:100%}
 	.pcbg{background:none;}
-	#wrapper {font-weight:normal; font-size: 1.25em; padding: 0px; margin:0px; height:auto;}
+	#wrapper {font-weight:normal; font-size: 15px; padding: 0px; margin:0px; height:auto;}
 	#wrapper h1 { height: 45px; background: url(../images/login_info_mini.gif) no-repeat; }
 	#login_info{ width:100%; padding:0; margin:0 5px 0 5px; height:auto;}
 }
