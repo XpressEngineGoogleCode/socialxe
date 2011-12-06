@@ -55,7 +55,10 @@
 						Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes, target-densitydpi=medium-dpi" />');
 					}
 				}
-				if(!defined('__XE__')) {
+				// jQuery 압축 버전에 로드되는 1.5 이상에서는 min을 항상 로드(모바일 버전 때문)
+				if(defined('__XE__')) {
+					Context::addJsFile("./common/js/jquery.min.js", true, '', -100000);
+				} else {
 					Context::addJsFile("./common/js/jquery.js", true, '', -100000);
 				}
 				$this->setTemplatePath($template_path);
