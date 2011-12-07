@@ -70,10 +70,15 @@
 
 			// 데이터를 준비
 			$args->parent_srl = Context::get('comment_srl');
-			$args->content = nl2br(htmlspecialchars(Context::get('content')));
+			$args->content = trim(Context::get('content'));
 			$args->nick_name = $this->providerManager->getMasterProviderNickName();
 			$args->content_link = Context::get('content_link');
 			$args->content_title = Context::get('content_title');
+
+			// 1.5이상이 아니거나 모바일 클래스가 없다면, 줄 바꿈과 특수 문자 변환 실행. - XE Core에서 모바일이면 처리를 해버린다.  1.5 이하에서도 이런 현상이 있는지 몰라서 1.5 이하는 예전처럼 처리
+			if(!Mobile::isFromMobilePhone() || !defined('__XE__')) {
+				$args->content = nl2br(htmlspecialchars($args->content));
+			}
 
 			// 해당 문서가 비밀글인지 확인
 			if ($oDocument->isSecret()) $args->is_secret = 'Y';
@@ -96,6 +101,7 @@
 			}
 
 			$result = $oCommentController->insertComment($args, $manual_inserted);
+
 			if (!$result->toBool()) return $result;
 
 			// 삽입된 댓글의 번호
