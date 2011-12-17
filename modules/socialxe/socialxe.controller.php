@@ -95,9 +95,11 @@
 				$manual_inserted = false;
 				// 부계정이 없으면 알림 설정
 				if (!$this->providerManager->getSlaveProvider())
-					$args->notify_message = "Y";
+					$args->notify_message = 'Y';
 			}else{
 				$manual_inserted = true;
+				$args->email_address = '';
+				$args->homepage = '';
 			}
 
 			$result = $oCommentController->insertComment($args, $manual_inserted);
